@@ -8,6 +8,7 @@ import {
   Lightbulb,
   Users,
   Mail,
+  LucideIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -17,10 +18,16 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export default function MinimalNavBar() {
-  const [isOpen, setIsOpen] = useState(false);
+interface MenuItem {
+  href: string;
+  icon: React.ReactElement<LucideIcon>;
+  label: string;
+}
 
-  const menuItems = [
+export default function MinimalNavBar(): JSX.Element {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const menuItems: MenuItem[] = [
     { href: "#about", icon: <Home className="h-4 w-4 mr-2" />, label: "About" },
     {
       href: "#research",
@@ -44,10 +51,12 @@ export default function MinimalNavBar() {
     },
   ];
 
-  const handleItemClick = (e, href) => {
+  const handleItemClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string
+  ): void => {
     e.preventDefault();
     setIsOpen(false);
-    // Use smooth scrolling to the target element
     const targetElement = document.querySelector(href);
     if (targetElement) {
       targetElement.scrollIntoView({ behavior: "smooth" });
