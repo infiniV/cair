@@ -47,7 +47,7 @@ export function HomePageComponent() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.2 }}
-        className="py-20 text-center bg-neutral-900"
+        className="py-10 text-center bg-neutral-900"
       >
         <h1 className="text-4xl font-bold mb-4 text-neutral-50">
           Center for AI Research (CAIR)
@@ -91,7 +91,7 @@ export function HomePageComponent() {
                   alt="Usman Nazir"
                   width={200}
                   height={200}
-                  className="rounded-full mx-auto mb-4 "
+                  className="rounded-full mx-auto mb-4 h-44 w-44 object-cover"
                 />
                 <p>
                   Specialization: Computer vision, remote sensing, deep
@@ -135,7 +135,7 @@ export function HomePageComponent() {
                   alt="Huda Sarfraz"
                   width={200}
                   height={200}
-                  className="rounded-full mx-auto mb-4"
+                  className="rounded-full mx-auto mb-4 h-44 w-44 object-cover"
                 />
                 <p>
                   Nearly two decades of expertise in speech and natural language
@@ -251,7 +251,7 @@ export function HomePageComponent() {
       </motion.section>
 
       {/* Contact */}
-      <motion.section
+      {/* <motion.section
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 1.2 }}
@@ -270,7 +270,7 @@ export function HomePageComponent() {
             Send us an Email
           </Button>
         </div>
-      </motion.section>
+      </motion.section> */}
 
       {/* Footer */}
       <motion.footer

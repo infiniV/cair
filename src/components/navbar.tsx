@@ -17,6 +17,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import Link from "next/link";
+import Image from "next/image";
 
 interface MenuItem {
   href: string;
@@ -51,18 +53,6 @@ export default function MinimalNavBar(): JSX.Element {
     },
   ];
 
-  const handleItemClick = (
-    e: React.MouseEvent<HTMLAnchorElement>,
-    href: string
-  ): void => {
-    e.preventDefault();
-    setIsOpen(false);
-    const targetElement = document.querySelector(href);
-    if (targetElement) {
-      targetElement.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
   return (
     <motion.nav
       initial={{ opacity: 0, y: -20 }}
@@ -71,7 +61,13 @@ export default function MinimalNavBar(): JSX.Element {
       className="flex items-center justify-between border-b border-neutral-800 h-14 p-5 bg-neutral-950"
     >
       <a href="/" className="text-xl font-bold text-neutral-50">
-        CAIR
+        <Image
+          src="https://ai.bnu.edu.pk/assets/img/logo.png"
+          alt="alt"
+          width={40}
+          height={70}
+          className="rounded-sm bg-white p-1"
+        />
       </a>
       <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
         <DropdownMenuTrigger asChild>
@@ -82,14 +78,13 @@ export default function MinimalNavBar(): JSX.Element {
         <DropdownMenuContent className="w-56 bg-neutral-800 border-neutral-700">
           {menuItems.map((item, index) => (
             <DropdownMenuItem key={index} className="focus:bg-neutral-700">
-              <a
+              <Link
                 href={item.href}
                 className="flex items-center w-full text-neutral-200 hover:text-neutral-50"
-                onClick={(e) => handleItemClick(e, item.href)}
               >
                 {item.icon}
                 {item.label}
-              </a>
+              </Link>
             </DropdownMenuItem>
           ))}
         </DropdownMenuContent>
