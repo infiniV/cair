@@ -1,16 +1,23 @@
 "use client";
 
-// import { useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
-// import { motion, AnimatePresence } from "framer-motion";
-import { Github, Linkedin, User } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { motion } from "framer-motion";
+import {
+  ChevronLeft,
+  ChevronRight,
+  // ChevronLeft,
+  // ChevronRight,
+  Github,
+  Linkedin,
+  User,
+} from "lucide-react";
+// import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
-  // CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -22,7 +29,16 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-const researchers = [
+interface Researcher {
+  name: string;
+  role: string;
+  focus: string;
+  description: string;
+  github: string | null;
+  linkedin: string | null;
+  image: string | null;
+}
+const researchers: Researcher[] = [
   {
     name: "Ebrahim Shahid Arshad",
     role: "Computer Science student",
@@ -85,76 +101,101 @@ const researchers = [
   },
 ];
 
-export function ResearchTeamComponent() {
+export default function ResearchTeam() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const maxIndex = researchers.length - 3;
+
+  const nextSlide = () => {
+    setCurrentIndex((prevIndex) => Math.min(prevIndex + 1, maxIndex));
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex((prevIndex) => Math.max(prevIndex - 1, 0));
+  };
+
   return (
-    <section className="py-8 bg-neutral-950">
+    <section
+      id="researcher"
+      className="py-12 bg-gradient-to-b from-neutral-950 to-neutral-900"
+    >
       <div className="container mx-auto px-4">
-        <h2 className="text-2xl font-bold mb-6 text-center text-neutral-50">
-          Research Team
+        <h2 className="text-3xl font-bold mb-8 text-center text-neutral-50">
+          Our Research Team
         </h2>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {researchers.map((researcher, index) => (
-            <ResearcherCard key={index} researcher={researcher} />
-          ))}
+        <div className="relative">
+          <div className="overflow-hidden">
+            <motion.div
+              className="flex"
+              initial={false}
+              animate={{ x: `${-currentIndex * 33.33}%` }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            >
+              {researchers.map((researcher, index) => (
+                <div key={index} className="w-full md:w-1/3 flex-shrink-0 px-3">
+                  <ResearcherCard researcher={researcher} />
+                </div>
+              ))}
+            </motion.div>
+          </div>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute left-0 top-1/2 transform -translate-y-1/2 text-neutral-400 hover:text-neutral-50 bg-neutral-900/50 backdrop-blur-sm"
+            onClick={prevSlide}
+            disabled={currentIndex === 0}
+          >
+            <ChevronLeft className="h-6 w-6" />
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute right-0 top-1/2 transform -translate-y-1/2 text-neutral-400 hover:text-neutral-50 bg-neutral-900/50 backdrop-blur-sm"
+            onClick={nextSlide}
+            disabled={currentIndex === maxIndex}
+          >
+            <ChevronRight className="h-6 w-6" />
+          </Button>
         </div>
       </div>
     </section>
   );
 }
 
-function ResearcherCard({ researcher }) {
+function ResearcherCard({ researcher }: { researcher: Researcher }) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Card className="bg-neutral-900 border-neutral-800 hover:bg-neutral-800 transition-colors cursor-pointer">
-          <CardHeader className="flex flex-row items-center space-x-4 p-4">
-            <Avatar className="w-12 h-12 rounded-lg">
-              <AvatarImage
-                src={researcher.image || "/placeholder.svg?height=48&width=48"}
-                alt={researcher.name}
-              />
-              <AvatarFallback>
-                <User />
-              </AvatarFallback>
-            </Avatar>
-            <div>
-              <CardTitle className="text-base font-semibold text-neutral-50">
+        <Card className="bg-neutral-800 border-neutral-700 hover:bg-neutral-750 transition-all duration-300 cursor-pointer h-full flex flex-col shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+          <CardHeader className="flex flex-col items-center space-y-4 p-6">
+            <div className="w-24 h-24 relative overflow-hidden rounded-full border-4 border-neutral-600">
+              {researcher.image ? (
+                <Image
+                  src={researcher.image}
+                  alt={researcher.name}
+                  layout="fill"
+                  objectFit="cover"
+                  className="rounded-full"
+                />
+              ) : (
+                <div className="w-full h-full bg-neutral-700 flex items-center justify-center">
+                  <User className="h-12 w-12 text-neutral-400" />
+                </div>
+              )}
+            </div>
+            <div className="text-center">
+              <CardTitle className="text-lg font-semibold text-neutral-50">
                 {researcher.name}
               </CardTitle>
-              <CardDescription className="text-xs text-neutral-400">
+              <CardDescription className="text-sm text-neutral-400 mt-1">
                 {researcher.role}
               </CardDescription>
             </div>
           </CardHeader>
-          <CardContent className="p-4 pt-0">
-            <p className="text-xs text-neutral-300 line-clamp-2">
+          <CardContent className="p-6 pt-0 flex-grow flex flex-col justify-between">
+            <p className="text-sm text-neutral-300 line-clamp-3 flex-grow">
               {researcher.focus}
             </p>
-          </CardContent>
-        </Card>
-      </DialogTrigger>
-      <DialogContent className="bg-neutral-900 text-neutral-50 p-0 overflow-hidden">
-        <div className="flex flex-col md:flex-row">
-          <div className="md:w-1/3 p-4">
-            <Image
-              src={researcher.image || "/placeholder.svg?height=300&width=300"}
-              alt={researcher.name}
-              width={300}
-              height={300}
-              className="rounded-lg object-cover w-full h-auto"
-            />
-          </div>
-          <div className="md:w-2/3 p-4">
-            <DialogHeader>
-              <DialogTitle className="text-xl font-bold">
-                {researcher.name}
-              </DialogTitle>
-              <p className="text-sm text-neutral-400">{researcher.role}</p>
-            </DialogHeader>
-            <p className="mt-2 text-sm text-neutral-300">
-              {researcher.description}
-            </p>
-            <div className="mt-4 flex space-x-2">
+            <div className="flex justify-center space-x-2 mt-4">
               {researcher.github && (
                 <a
                   href={researcher.github}
@@ -162,9 +203,69 @@ function ResearcherCard({ researcher }) {
                   rel="noopener noreferrer"
                 >
                   <Button
-                    variant="ghost"
                     size="sm"
-                    className="text-neutral-400 hover:text-neutral-50"
+                    className="bg-transparent text-neutral-400 hover:text-neutral-50"
+                  >
+                    <Github className="h-4 w-4" />
+                  </Button>
+                </a>
+              )}
+              {researcher.linkedin && (
+                <a
+                  href={researcher.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Button
+                    size="sm"
+                    className="bg-transparent text-neutral-400 hover:text-neutral-50"
+                  >
+                    <Linkedin className="h-4 w-4" />
+                  </Button>
+                </a>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+      </DialogTrigger>
+      <DialogContent className="bg-neutral-900 text-neutral-50 p-0 overflow-hidden max-w-3xl">
+        <div className="flex flex-col md:flex-row">
+          <div className="md:w-1/3 p-6 bg-neutral-800">
+            {researcher.image ? (
+              <Image
+                src={researcher.image}
+                alt={researcher.name}
+                width={300}
+                height={300}
+                className="rounded-lg object-cover w-full h-auto"
+              />
+            ) : (
+              <div className="w-full h-64 bg-neutral-700 flex items-center justify-center rounded-lg">
+                <User className="h-16 w-16 text-neutral-400" />
+              </div>
+            )}
+          </div>
+          <div className="md:w-2/3 p-6">
+            <DialogHeader>
+              <DialogTitle className="text-2xl font-bold">
+                {researcher.name}
+              </DialogTitle>
+              <p className="text-md text-neutral-400 mt-1">{researcher.role}</p>
+            </DialogHeader>
+            <p className="mt-4 text-sm text-neutral-300">
+              {researcher.description}
+            </p>
+            <div className="mt-6 flex space-x-3">
+              {researcher.github && (
+                <a
+                  href={researcher.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="bg-transparent text-neutral-400 hover:text-neutral-900"
                   >
                     <Github className="h-4 w-4 mr-2" />
                     GitHub
@@ -178,9 +279,9 @@ function ResearcherCard({ researcher }) {
                   rel="noopener noreferrer"
                 >
                   <Button
-                    variant="ghost"
+                    variant="outline"
                     size="sm"
-                    className="text-neutral-400 hover:text-neutral-50"
+                    className="bg-transparent text-neutral-400 hover:text-neutral-900"
                   >
                     <Linkedin className="h-4 w-4 mr-2" />
                     LinkedIn

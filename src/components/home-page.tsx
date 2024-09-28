@@ -1,20 +1,11 @@
 "use client";
 
-import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import {
   ArrowRight,
-  Menu,
   ExternalLink,
-  // Microscope,
-  // Brain,
-  // ChartBar,
-  // Cog,
-  // Scale,
-  // Mail,
-  // X,
   Activity,
   ShoppingCart,
   MessageSquare,
@@ -35,97 +26,21 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-// import // Carousel,
-// // CarouselContent,
-// // CarouselItem,
-// // CarouselNext,
-// // CarouselPrevious,
-// "@/components/ui/carousel";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
-// import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { ResearchTeamComponent } from "./research-team";
+import ResearchTeam from "./research-team";
+import { AboutUsComponent } from "./about-us";
+import MinimalNavBar from "./navbar";
 
 export function HomePageComponent() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   return (
     <div className="min-h-screen w-screen bg-neutral-950 text-neutral-50">
       {/* Navbar */}
-      <motion.nav
-        initial={{ opacity: 0, y: -50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="flex items-center justify-between p-4 border-b border-neutral-800"
-      >
-        <Link href="/" className="text-2xl font-bold text-neutral-50">
-          CAIR
-        </Link>
-        <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
-          <SheetTrigger asChild>
-            <Button variant="ghost" size="icon" className="text-neutral-50">
-              <Menu className="h-5 w-5" />
-            </Button>
-          </SheetTrigger>
-          <SheetContent side="right" className="bg-neutral-900 text-neutral-50">
-            <SheetHeader>
-              <SheetTitle className="text-neutral-50">Menu</SheetTitle>
-              <SheetDescription className="text-neutral-400">
-                Navigate through our research lab
-              </SheetDescription>
-            </SheetHeader>
-            <div className="mt-4 space-y-4">
-              <Link
-                href="#about"
-                className="block text-neutral-200 hover:text-neutral-50"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                About Us
-              </Link>
-              <Link
-                href="#research"
-                className="block text-neutral-200 hover:text-neutral-50"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Research Areas
-              </Link>
-              <Link
-                href="#projects"
-                className="block text-neutral-200 hover:text-neutral-50"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Projects
-              </Link>
-              <Link
-                href="#team"
-                className="block text-neutral-200 hover:text-neutral-50"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Our Team
-              </Link>
-              <Link
-                href="#contact"
-                className="block text-neutral-200 hover:text-neutral-50"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Contact
-              </Link>
-            </div>
-          </SheetContent>
-        </Sheet>
-      </motion.nav>
+      <MinimalNavBar />
 
       {/* Hero Section */}
       <motion.section
@@ -146,55 +61,7 @@ export function HomePageComponent() {
       </motion.section>
 
       {/* About Us */}
-      <motion.section
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.4 }}
-        className="py-16 bg-neutral-950"
-        id="about"
-      >
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-8 text-center text-neutral-50">
-            About Us
-          </h2>
-          <Card className="bg-neutral-900 border-neutral-800">
-            <CardContent className="text-neutral-200 pt-6">
-              <p className="mb-4">
-                The Center for AI Research (CAIR) at BNU is a leading graduate
-                research lab focused on advancing AI through collaborative
-                research. Under the leadership of Dr. Usman, Ms. Aruj, and Ms.
-                Huda, CAIR addresses critical global challenges through
-                innovative AI solutions.
-              </p>
-              <h3 className="text-xl font-semibold mb-2 text-neutral-100">
-                Key Research Areas:
-              </h3>
-              <ul className="list-disc pl-5 space-y-2">
-                <li>
-                  <strong>Geo-AI:</strong> Geospatial analysis and environmental
-                  monitoring using AI.
-                </li>
-                <li>
-                  <strong>Vision-AI:</strong> Developing computer vision
-                  techniques and image processing algorithms.
-                </li>
-                <li>
-                  <strong>Predict-AI:</strong> Creating predictive models to
-                  analyze and forecast behaviors and trends.
-                </li>
-                <li>
-                  <strong>ML-Efficiency:</strong> Designing efficient machine
-                  learning algorithms.
-                </li>
-                <li>
-                  <strong>AI-Policy:</strong> Ensuring ethical AI deployment and
-                  societal benefits.
-                </li>
-              </ul>
-            </CardContent>
-          </Card>
-        </div>
-      </motion.section>
+      <AboutUsComponent />
 
       {/* Leads Introduction */}
       <motion.section
@@ -289,91 +156,7 @@ export function HomePageComponent() {
       </motion.section>
 
       {/* Research Team */}
-      <ResearchTeamComponent />
-      {/* <motion.section
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.8 }}
-        className="py-16 bg-neutral-950"
-      >
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-8 text-center text-neutral-50">
-            Research Team
-          </h2>
-          <Carousel>
-            <CarouselContent>
-              {[
-                {
-                  name: "Ebrahim Shahid Arshad",
-                  role: "Computer Science student",
-                  focus:
-                    "Mathematical computer science, customer churn algorithms",
-                },
-                {
-                  name: "Wahab Sami",
-                  role: "Undergraduate student",
-                  focus: "Malaria prediction model using AI",
-                },
-                {
-                  name: "Raahim Arbaz",
-                  role: "Undergraduate student",
-                  focus: "AI research on global disease burden",
-                  image: "https://ai.bnu.edu.pk/assets/img/itrcteam/Raahim.jpg",
-                },
-                {
-                  name: "Amna Mazhar",
-                  role: "AI researcher",
-                  focus:
-                    "Predicting deforestation causes and prevention methods",
-                  image: "https://ai.bnu.edu.pk/assets/img/itrcteam/Amna.jpg",
-                },
-                {
-                  name: "Amber",
-                  role: "Computer Science student",
-                  focus:
-                    "Analyzing deforestation trends using Earth Observation data",
-                  image: "https://ai.bnu.edu.pk/assets/img/itrcteam/Amber.png",
-                },
-                {
-                  name: "Rusham",
-                  role: "Third-year Computer Science student",
-                  focus:
-                    "AI research on flood-affected areas in Punjab and Sindh",
-                  image:
-                    "https://ai.bnu.edu.pk/assets/img/itrcteam/Rusham.jpeg",
-                },
-              ].map((member, index) => (
-                <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-                  <Card className="bg-neutral-800 border-neutral-700">
-                    <CardHeader>
-                      <CardTitle className="text-neutral-50">
-                        {member.name}
-                      </CardTitle>
-                      <CardDescription className="text-neutral-300">
-                        {member.role}
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent className="text-neutral-200">
-                      {member.image && (
-                        <Image
-                          src={member.image}
-                          alt={member.name}
-                          width={100}
-                          height={100}
-                          className="rounded-full mx-auto mb-4"
-                        />
-                      )}
-                      <p>{member.focus}</p>
-                    </CardContent>
-                  </Card>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious className="text-neutral-200 hover:text-neutral-50" />
-            <CarouselNext className="text-neutral-200 hover:text-neutral-50" />
-          </Carousel>
-        </div>
-      </motion.section> */}
+      <ResearchTeam />
 
       {/* Research Work */}
       <motion.section
@@ -384,7 +167,10 @@ export function HomePageComponent() {
         id="projects"
       >
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-8 text-center text-neutral-50">
+          <h2
+            id="research"
+            className="text-3xl font-bold mb-8 text-center text-neutral-50"
+          >
             Research Work
           </h2>
           <Accordion type="single" collapsible className="w-full">
