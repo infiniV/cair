@@ -35,13 +35,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
+// import // Carousel,
+// // CarouselContent,
+// // CarouselItem,
+// // CarouselNext,
+// // CarouselPrevious,
+// "@/components/ui/carousel";
 import {
   Sheet,
   SheetContent,
@@ -57,12 +56,13 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { ResearchTeamComponent } from "./research-team";
 
 export function HomePageComponent() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-neutral-950 text-neutral-50">
+    <div className="min-h-screen w-screen bg-neutral-950 text-neutral-50">
       {/* Navbar */}
       <motion.nav
         initial={{ opacity: 0, y: -50 }}
@@ -224,7 +224,7 @@ export function HomePageComponent() {
                   alt="Usman Nazir"
                   width={200}
                   height={200}
-                  className="rounded-full mx-auto mb-4"
+                  className="rounded-full mx-auto mb-4 "
                 />
                 <p>
                   Specialization: Computer vision, remote sensing, deep
@@ -289,7 +289,8 @@ export function HomePageComponent() {
       </motion.section>
 
       {/* Research Team */}
-      <motion.section
+      <ResearchTeamComponent />
+      {/* <motion.section
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.8 }}
@@ -372,7 +373,7 @@ export function HomePageComponent() {
             <CarouselNext className="text-neutral-200 hover:text-neutral-50" />
           </Carousel>
         </div>
-      </motion.section>
+      </motion.section> */}
 
       {/* Research Work */}
       <motion.section
